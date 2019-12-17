@@ -533,6 +533,8 @@ def proto_compile_impl(ctx):
     # By default we have a single 'proto_path' argument at the 'staging area'
     # root.
     args += ["--proto_path=%s" % outdir]
+    for dep in deps:
+        args += ["--proto_path=%s" % proto_path for proto_path in dep.transitive_proto_path.to_list()]
 
     if ctx.attr.include_imports:
         args += ["--include_imports"]
